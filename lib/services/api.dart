@@ -7,7 +7,7 @@ class Api {
 
   static final dio = Dio(
     BaseOptions(
-        baseUrl: '10.0.2.2/movies/public',
+        baseUrl: 'http://10.0.2.2/movies/public',
         receiveDataWhenStatusError: true
     ),
   );
@@ -33,6 +33,9 @@ class Api {
 
         onResponse: (response, handler) {
           print('${response.data}');
+
+          if(response.data['error'] == 1) throw response.data['message'];
+
           return handler.next(response);
         },
 
@@ -52,4 +55,9 @@ class Api {
 
     ));
   }
+
+  static Future<Response> getGenres() async {
+    return dio.get('/api/genres');
+  }
+
 }
