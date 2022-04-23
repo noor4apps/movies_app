@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Movie App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
+      darkTheme: ThemeData(
         appBarTheme: AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Colors.blue,
@@ -34,11 +34,12 @@ class MyApp extends StatelessWidget {
           // color: Colors.blue
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: Colors.amber,
-          secondary: Colors.amber,
+          primary: Colors.green,
+          secondary: Colors.lightGreen,
+          brightness: Brightness.dark,
         ),
       ),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       // translations: Translation(),
       locale: Locale('en'), //Get.deviceLocale
       fallbackLocale: Locale('en'),
