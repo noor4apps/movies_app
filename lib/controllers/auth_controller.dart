@@ -7,9 +7,9 @@ class AuthController extends GetxController {
   final genreController = Get.put(GenreController());
   var isLoggedIn = false.obs;
 
- @override
-  void onInit() {
-    genreController.getGenres();
+  @override
+  void onInit() async {
+    await genreController.getGenres();
     redirect();
     super.onInit();
   }
