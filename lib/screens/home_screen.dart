@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movies_app/controllers/home_controller.dart';
+import 'package:movies_app/models/movie.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomeScreen extends StatelessWidget {
   final homeController = Get.put(HomeController());
@@ -11,20 +12,22 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(12),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children:<Widget>[
-                buildLandscapeMovieList()
-              ],
+        child: Obx(() {
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children:<Widget>[
+                  buildLandscapeMovieList(isLoading: homeController.isLoadingNowPlaying.value, movies: homeController.nowPlayingMovies)
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        }),
       ),
     );
   }
 
-  Widget buildLandscapeMovieList() {
+  Widget buildLandscapeMovieList({required bool isLoading, required List<Movie> movies}) {
     return Column(
       children:<Widget>[
         Row(
@@ -37,20 +40,24 @@ class HomeScreen extends StatelessWidget {
         SizedBox(height: 10),
         Container(
           height: 255,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return buildLandscapeMovieCard();
-            },
-            separatorBuilder: (context, index) {return SizedBox(width: 10);},
-            itemCount: 3,
-          ),
-        )
+          child: isLoading == true
+              ? Center(child: CircularProgressIndicator())
+              : ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return buildLandscapeMovieCard(movie: movies[index]);
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(width: 10);
+                  },
+                  itemCount: movies.length,
+                ),
+        ),
       ],
     );
   }
 
-  buildLandscapeMovieCard() {
+  Widget buildLandscapeMovieCard({required Movie movie}) {
     return Container(
       height: double.infinity,
       width: 340,
@@ -61,23 +68,36 @@ class HomeScreen extends StatelessWidget {
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Column(
           children:<Widget>[
-            Image.network(
-              'http://www.impawards.com/2009/posters/avatar_ver6.jpg',
+            Container(
               width: double.infinity,
               height: 200,
-              fit: BoxFit.cover,
+              child: Stack(
+                children:<Widget>[
+                  Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: '${movie.banner}',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ],
+              ),
             ),
             Container(
               padding: const EdgeInsets.all(10),
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: Text('Movie Name', style: TextStyle(fontSize: 18, color: Colors.green), overflow: TextOverflow.ellipsis, maxLines: 1),
+                    child: Text('${movie.title}', style: TextStyle(fontSize: 18, color: Colors.green), overflow: TextOverflow.ellipsis, maxLines: 1),
                   ),
+                  SizedBox(width: 5),
                   Row(
                     children: <Widget>[
                       Icon(Icons.star, color: Colors.yellow),
-                      Text('7.5', style: TextStyle(fontSize: 18, color: Colors.lightGreen))
+                      Text('${movie.vote}', style: TextStyle(fontSize: 18, color: Colors.lightGreen))
                     ],
                   ),
                 ],
