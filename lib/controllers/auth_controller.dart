@@ -9,8 +9,8 @@ class AuthController extends GetxController {
 
  @override
   void onInit() {
-    redirect();
     genreController.getGenres();
+    redirect();
     super.onInit();
   }
 
