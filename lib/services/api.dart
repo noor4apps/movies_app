@@ -60,7 +60,7 @@ class Api {
     return dio.get('/api/genres');
   }
 
-  static Future<Response> getMovies(String type) async {
+  static Future<Response> getMovies({required String type}) async {
     return dio.get('/api/movies', queryParameters: {
       'type': type
     });

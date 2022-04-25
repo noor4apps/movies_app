@@ -17,7 +17,11 @@ class HomeScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children:<Widget>[
-                  buildLandscapeMovieList(isLoading: homeController.isLoadingNowPlaying.value, movies: homeController.nowPlayingMovies)
+                  buildLandscapeMovieList(title: 'NowPlaying',isLoading: homeController.isLoadingNowPlaying.value, movies: homeController.nowPlayingMovies),
+                  SizedBox(height: 20),
+                  buildPortraitMovieList(title: 'Popular',isLoading: homeController.isLoadingPopular.value, movies: homeController.popularMovies),
+                  SizedBox(height: 20),
+                  buildPortraitMovieList(title: 'Upcoming',isLoading: homeController.isLoadingUpcoming.value, movies: homeController.upcomingMovies),
                 ],
               ),
             ),
@@ -27,13 +31,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildLandscapeMovieList({required bool isLoading, required List<Movie> movies}) {
+  Widget buildLandscapeMovieList({required String title, required bool isLoading, required List<Movie> movies}) {
     return Column(
       children:<Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children:<Widget>[
-            Text('Now Playing', style: TextStyle(fontSize: 20, color: Colors.green),),
+            Text('${title}', style: TextStyle(fontSize: 20, color: Colors.green),),
             Text('Show All...', style: TextStyle(color: Colors.lightGreen),),
           ],
         ),
@@ -43,6 +47,7 @@ class HomeScreen extends StatelessWidget {
           child: isLoading == true
               ? Center(child: CircularProgressIndicator())
               : ListView.separated(
+                  physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return buildLandscapeMovieCard(movie: movies[index]);
@@ -105,6 +110,70 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+
+  Widget buildPortraitMovieList({required String title, required bool isLoading, required List<Movie> movies}) {
+    return Column(
+      children:<Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children:<Widget>[
+            Text('${title}', style: TextStyle(fontSize: 20, color: Colors.green),),
+            Text('Show All...', style: TextStyle(color: Colors.lightGreen),),
+          ],
+        ),
+        SizedBox(height: 10),
+        Container(
+          height: 240,
+          child: isLoading == true
+              ? Center(child: CircularProgressIndicator())
+              : ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return buildPortraitMovieCard(movie: movies[index]);
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(width: 10);
+                  },
+                  itemCount: movies.length,
+                ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildPortraitMovieCard({required Movie movie}) {
+    return Container(
+      height: double.infinity,
+      width: 140,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:<Widget>[
+          Container(
+            width: double.infinity,
+            height: 210,
+            child: Stack(
+              children:<Widget>[
+                Center(
+                  child: CircularProgressIndicator(),
+                ),
+                FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: '${movie.poster}',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 7),
+          Text('${movie.title}', style: TextStyle(fontSize: 16, color: Colors.green), overflow: TextOverflow.ellipsis, maxLines: 1),
+        ],
       ),
     );
   }

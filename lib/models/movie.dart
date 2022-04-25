@@ -18,6 +18,7 @@ class Movie {
     description = json['description'];
     poster = json['poster'];
     banner = json['banner'];
+    type = json['type'] ?? '';
     releaseDate = json['release_date'];
     vote = json['vote'].toDouble();
     voteCount = json['vote_count'];
