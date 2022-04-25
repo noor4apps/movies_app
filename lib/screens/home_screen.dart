@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movies_app/controllers/home_controller.dart';
 import 'package:movies_app/models/movie.dart';
+import 'package:movies_app/screens/movies_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -17,11 +18,11 @@ class HomeScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children:<Widget>[
-                  buildLandscapeMovieList(title: 'NowPlaying',isLoading: homeController.isLoadingNowPlaying.value, movies: homeController.nowPlayingMovies),
+                  buildLandscapeMovieList(title: 'NowPlaying', type: 'now_playing', isLoading: homeController.isLoadingNowPlaying.value, movies: homeController.nowPlayingMovies),
                   SizedBox(height: 20),
-                  buildPortraitMovieList(title: 'Popular',isLoading: homeController.isLoadingPopular.value, movies: homeController.popularMovies),
+                  buildPortraitMovieList(title: 'Popular', type: 'popular', isLoading: homeController.isLoadingPopular.value, movies: homeController.popularMovies),
                   SizedBox(height: 20),
-                  buildPortraitMovieList(title: 'Upcoming',isLoading: homeController.isLoadingUpcoming.value, movies: homeController.upcomingMovies),
+                  buildPortraitMovieList(title: 'Upcoming', type: 'upcoming', isLoading: homeController.isLoadingUpcoming.value, movies: homeController.upcomingMovies),
                 ],
               ),
             ),
@@ -31,14 +32,22 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildLandscapeMovieList({required String title, required bool isLoading, required List<Movie> movies}) {
+  Widget buildLandscapeMovieList({required String title, required String type, required bool isLoading, required List<Movie> movies}) {
     return Column(
       children:<Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children:<Widget>[
             Text('${title}', style: TextStyle(fontSize: 20, color: Colors.green),),
-            Text('Show All...', style: TextStyle(color: Colors.lightGreen),),
+            InkWell(
+              onTap: () {
+                Get.to(
+                  () => MoviesScreen(type: type),
+                  preventDuplicates: false,
+                );
+              },
+              child: Text('Show All...', style: TextStyle(color: Colors.lightGreen)),
+            ),
           ],
         ),
         SizedBox(height: 10),
@@ -115,14 +124,22 @@ class HomeScreen extends StatelessWidget {
   }
 
 
-  Widget buildPortraitMovieList({required String title, required bool isLoading, required List<Movie> movies}) {
+  Widget buildPortraitMovieList({required String title, required String type, required bool isLoading, required List<Movie> movies}) {
     return Column(
       children:<Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children:<Widget>[
             Text('${title}', style: TextStyle(fontSize: 20, color: Colors.green),),
-            Text('Show All...', style: TextStyle(color: Colors.lightGreen),),
+            InkWell(
+              onTap: () {
+                Get.to(
+                  () => MoviesScreen(type: type),
+                  preventDuplicates: false,
+                );
+              },
+              child: Text('Show All...', style: TextStyle(color: Colors.lightGreen)),
+            )
           ],
         ),
         SizedBox(height: 10),

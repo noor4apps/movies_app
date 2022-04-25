@@ -20,8 +20,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData(
         appBarTheme: AppBarTheme(
+          centerTitle: true,
+          iconTheme: IconThemeData(color: Colors.white, size: 27),
+          backgroundColor: Colors.lightGreenAccent[200],
           systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.blue,
+            statusBarColor: Colors.lightGreen,
             statusBarIconBrightness: Brightness.light,
           ),
           titleTextStyle: TextStyle(
