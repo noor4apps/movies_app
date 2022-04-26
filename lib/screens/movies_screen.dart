@@ -53,32 +53,40 @@ class _MoviesScreenState extends State<MoviesScreen> {
               ? Center(child: CircularProgressIndicator())
               : Container(
                   padding: const EdgeInsets.all(12),
-                  child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: Column(
-                      children: [
-                        ListView.separated(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return buildMovieItem(movieController.movies.value[index]);
-                          },
-                          separatorBuilder: (context, index) {
-                            return SizedBox(height: 10);
-                          },
-                          itemCount: movieController.movies.length,
-                        ),
-                        Visibility(
-                          visible: movieController.isLoadingPagination.value,
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            width: 40,
-                            height: 40,
-                            child: Center(child: CircularProgressIndicator()),
+                  child: RefreshIndicator(
+                    onRefresh: () {
+                      movieController.isLoading.value = true;
+                      movieController.currentPage.value = 1;
+                      return movieController.getMovies(page: 1, type: widget.type, genreId: widget.genreId);
+                    },
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      physics: BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          ListView.separated(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return buildMovieItem(movieController.movies.value[index]);
+                            },
+                            separatorBuilder: (context, index) {
+                              return SizedBox(height: 10);
+                            },
+                            itemCount: movieController.movies.length,
                           ),
-                        ),
-                      ],
+                          Visibility(
+                            visible: movieController.isLoadingPagination.value,
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              width: 40,
+                              height: 40,
+                              child: Center(child: CircularProgressIndicator()),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
