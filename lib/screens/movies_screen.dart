@@ -17,11 +17,28 @@ class MoviesScreen extends StatefulWidget {
 
 class _MoviesScreenState extends State<MoviesScreen> {
 
-  final moviesController = Get.put(MovieController());
+  final movieController = Get.put(MovieController());
+  final scrollController = ScrollController();
 
   @override
   void initState() {
-    moviesController.getMovies(genreId: widget.genreId, type: widget.type);
+    movieController.getMovies(genreId: widget.genreId, type: widget.type);
+
+    scrollController.addListener(() {
+      var sControllerOffset = scrollController.offset;
+      var sControllerMax = scrollController.position.maxScrollExtent - 100;
+      var isLoadingPagination = movieController.isLoadingPagination.value;
+      var hasMorePages = movieController.currentPage.value < movieController.lastPage.value;
+
+      if (sControllerOffset > sControllerMax && isLoadingPagination == false && hasMorePages) {
+        movieController.isLoadingPagination.value = true;
+        movieController.currentPage.value++;
+
+        movieController.getMovies(page: movieController.currentPage.value, type: widget.type, genreId: widget.genreId);
+      }
+
+    });
+
     super.initState();
   }
 
@@ -32,24 +49,36 @@ class _MoviesScreenState extends State<MoviesScreen> {
         title: Text('Movies', style: TextStyle(fontSize: 20, color: Colors.green, fontWeight: FontWeight.w600)),
       ),
         body: Obx(() {
-          return moviesController.isLoading.value == true
-              ? Container(
-                  child: Center(child: CircularProgressIndicator())
-                )
+          return movieController.isLoading.value == true
+              ? Center(child: CircularProgressIndicator())
               : Container(
                   padding: const EdgeInsets.all(12),
                   child: SingleChildScrollView(
-                    child: ListView.separated(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return buildMovieItem(moviesController.movies.value[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return SizedBox(height: 10);
-                      },
-                      itemCount: moviesController.movies.length,
+                    controller: scrollController,
+                    child: Column(
+                      children: [
+                        ListView.separated(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return buildMovieItem(movieController.movies.value[index]);
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 10);
+                          },
+                          itemCount: movieController.movies.length,
+                        ),
+                        Visibility(
+                          visible: movieController.isLoadingPagination.value,
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            width: 40,
+                            height: 40,
+                            child: Center(child: CircularProgressIndicator()),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );
