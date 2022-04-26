@@ -17,6 +17,9 @@ class MovieController extends GetxController {
 
     if (page == 1) {
       movies.clear();
+      // for RefreshIndicator
+      isLoading.value = true;
+      currentPage.value = 1;
     }
 
     movies.addAll(movieResponse.movies);

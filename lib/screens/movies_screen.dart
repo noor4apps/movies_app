@@ -55,8 +55,6 @@ class _MoviesScreenState extends State<MoviesScreen> {
                   padding: const EdgeInsets.all(12),
                   child: RefreshIndicator(
                     onRefresh: () {
-                      movieController.isLoading.value = true;
-                      movieController.currentPage.value = 1;
                       return movieController.getMovies(page: 1, type: widget.type, genreId: widget.genreId);
                     },
                     child: SingleChildScrollView(
