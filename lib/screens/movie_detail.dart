@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/models/movie.dart';
 
@@ -21,13 +22,23 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           SliverAppBar(
             floating: true,
             pinned: true,
-            expandedHeight: 250,
+            expandedHeight: 300,
             backgroundColor: Colors.green,
             flexibleSpace: FlexibleSpaceBar(
               background: buildTopBanner(movie: widget.movie),
             ),
           ),
-          SliverToBoxAdapter(child: null)
+          SliverToBoxAdapter(
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildDetails(movie: widget.movie),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -65,19 +76,43 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 ),
               ),
               Text('${movie.title}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600), maxLines: 2, overflow: TextOverflow.ellipsis),
-              SizedBox(height: 5),
               Wrap(
                 spacing: 5,
                 runSpacing: -10,
                 children: [
                   ...movie.genres.map((genre) {
-                    return Chip(label: Text('${genre.name}'));
+                    return Chip(label: Text('${genre.name}', style: TextStyle(fontSize: 13)));
                   })
                 ],
               ),
             ],
           ),
         )
+      ],
+    );
+  }
+
+  Widget buildDetails({required Movie movie}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Description', style: TextStyle(fontSize: 18)),
+        SizedBox(height: 10),
+        Text('${movie.description}', style: TextStyle(fontSize: 16, height: 1.3, color: Colors.lightGreen[200])),
+        SizedBox(height: 10),
+        Row(
+          children: [
+            Container(width: 160, child: Text('Release Date ', style: TextStyle(fontSize: 18))),
+            Text('${movie.releaseDate}', style: TextStyle(fontSize: 16, height: 1.3, color: Colors.lightGreen[200]))
+          ],
+        ),
+        SizedBox(height: 10),
+        Row(
+          children: [
+            Container(width:160, child: Text('Vote Count ', style: TextStyle(fontSize: 18))),
+            Text('${movie.voteCount}', style: TextStyle(fontSize: 16, height: 1.3, color: Colors.lightGreen[200]))
+          ],
+        ),
       ],
     );
   }
