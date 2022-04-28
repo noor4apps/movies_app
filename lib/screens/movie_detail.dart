@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movies_app/controllers/movie_controller.dart';
+import 'package:movies_app/models/actor.dart';
 import 'package:movies_app/models/movie.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -146,39 +147,43 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             scrollDirection: Axis.horizontal,
             shrinkWrap: false,
             itemBuilder: (context, index) {
-              return Container(
-                width: 160,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 160,
-                      height: 230,
-                      child: Stack(
-                        // alignment: Alignment.bottomLeft,
-                        children: [
-                          Center(child: CircularProgressIndicator()),
-                          FadeInImage.memoryNetwork(
-                            placeholder: kTransparentImage,
-                            image: '${movieController.actors[index].image}',
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: double.infinity,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text('${movieController.actors[index].name}', overflow: TextOverflow.ellipsis, maxLines: 1)
-                  ],
-                ),
-              );
+              return buildActor(actor: movieController.actors[index]);
             },
             separatorBuilder: (context, index) {return SizedBox(width: 10);},
             itemCount: movieController.actors.length,
           ),
         ),
       ],
+    );
+  }
+
+  Widget buildActor({required Actor actor}) {
+    return Container(
+      width: 160,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 160,
+            height: 230,
+            child: Stack(
+              // alignment: Alignment.bottomLeft,
+              children: [
+                Center(child: CircularProgressIndicator()),
+                FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: '${actor.image}',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          Text('${actor.name}', overflow: TextOverflow.ellipsis, maxLines: 1)
+        ],
+      ),
     );
   }
 
