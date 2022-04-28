@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children:<Widget>[
-                  buildLandscapeMovieList(title: 'NowPlaying', type: 'now_playing', isLoading: homeController.isLoadingNowPlaying.value, movies: homeController.nowPlayingMovies),
+                  buildLandscapeMovieList(title: 'Now Playing', type: 'now_playing', isLoading: homeController.isLoadingNowPlaying.value, movies: homeController.nowPlayingMovies),
                   SizedBox(height: 20),
                   buildPortraitMovieList(title: 'Popular', type: 'popular', isLoading: homeController.isLoadingPopular.value, movies: homeController.popularMovies),
                   SizedBox(height: 20),
@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
             InkWell(
               onTap: () {
                 Get.to(
-                  () => MoviesScreen(type: type),
+                  () => MoviesScreen(title: title, type: type),
                   preventDuplicates: false,
                 );
               },
@@ -140,7 +140,7 @@ class HomeScreen extends StatelessWidget {
             InkWell(
               onTap: () {
                 Get.to(
-                  () => MoviesScreen(type: type),
+                  () => MoviesScreen(title: title, type: type),
                   preventDuplicates: false,
                 );
               },

@@ -6,11 +6,12 @@ import 'package:movies_app/screens/movie_detail.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MoviesScreen extends StatefulWidget {
+  late final String title;
   late final String? type;
   late final int? genreId;
 
 
-  MoviesScreen({this.type, this.genreId});
+  MoviesScreen({required this.title, this.type, this.genreId});
 
   @override
   _MoviesScreenState createState() => _MoviesScreenState();
@@ -47,7 +48,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Movies', style: TextStyle(fontSize: 20, color: Colors.green, fontWeight: FontWeight.w600)),
+        title: Text('${widget.title}', style: TextStyle(fontSize: 20, color: Colors.green, fontWeight: FontWeight.w600)),
       ),
         body: Obx(() {
           return movieController.isLoading.value == true

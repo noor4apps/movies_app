@@ -25,7 +25,7 @@ class GenresScreen extends StatelessWidget {
               return InkWell(
                 onTap: () {
                   Get.to(
-                    () => MoviesScreen(genreId: genreController.genres[index].id),
+                    () => MoviesScreen(title: '${genreController.genres[index].name}',genreId: genreController.genres[index].id),
                     preventDuplicates: false,
                   );
                 },
