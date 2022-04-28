@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/models/movie.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class MovieDetailScreen extends StatefulWidget {
 
@@ -35,6 +36,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildDetails(movie: widget.movie),
+                  SizedBox(height: 10),
+                  buildActors()
                 ],
               ),
             ),
@@ -112,6 +115,54 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             Container(width:160, child: Text('Vote Count ', style: TextStyle(fontSize: 18))),
             Text('${movie.voteCount}', style: TextStyle(fontSize: 16, height: 1.3, color: Colors.lightGreen[200]))
           ],
+        ),
+      ],
+    );
+  }
+
+  Widget buildActors() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(width: 160, child: Text('Actors ', style: TextStyle(fontSize: 18))),
+        SizedBox(height: 10),
+        Container(
+          height: 270,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: false,
+            itemBuilder: (context, index) {
+              return Container(
+                width: 160,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 160,
+                      height: 230,
+                      child: Stack(
+                        // alignment: Alignment.bottomLeft,
+                        children: [
+                          Center(child: CircularProgressIndicator()),
+                          FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            image: 'https://via.placeholder.com/150',
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text('actor name', overflow: TextOverflow.ellipsis, maxLines: 1)
+                  ],
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {return SizedBox(width: 10);},
+            itemCount: 4,
+          ),
         ),
       ],
     );
