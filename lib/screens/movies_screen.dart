@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movies_app/controllers/movie_controller.dart';
 import 'package:movies_app/models/movie.dart';
-import 'package:movies_app/screens/movie_detail.dart';
+import 'package:movies_app/screens/movie_detail_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MoviesScreen extends StatefulWidget {
