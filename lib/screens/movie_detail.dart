@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:movies_app/controllers/movie_controller.dart';
 import 'package:movies_app/models/movie.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -14,6 +15,14 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
+
+  final movieController = Get.find<MovieController>();
+
+  @override
+  void initState() {
+    movieController.getActors(movieId: widget.movie.id);
+    super.initState();
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -30,17 +39,19 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             ),
           ),
           SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildDetails(movie: widget.movie),
-                  SizedBox(height: 10),
-                  buildActors()
-                ],
-              ),
-            ),
+            child: Obx((){
+              return Container(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildDetails(movie: widget.movie),
+                    SizedBox(height: 10),
+                    buildActors(),
+                  ],
+                ),
+              );
+            })
           ),
         ],
       ),
@@ -128,7 +139,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         SizedBox(height: 10),
         Container(
           height: 270,
-          child: ListView.separated(
+          child: movieController.isLoadingActors.value
+          ? Center(child: CircularProgressIndicator())
+          : ListView.separated(
+            physics: BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             shrinkWrap: false,
             itemBuilder: (context, index) {
@@ -146,7 +160,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           Center(child: CircularProgressIndicator()),
                           FadeInImage.memoryNetwork(
                             placeholder: kTransparentImage,
-                            image: 'https://via.placeholder.com/150',
+                            image: '${movieController.actors[index].image}',
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: double.infinity,
@@ -155,13 +169,13 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    Text('actor name', overflow: TextOverflow.ellipsis, maxLines: 1)
+                    Text('${movieController.actors[index].name}', overflow: TextOverflow.ellipsis, maxLines: 1)
                   ],
                 ),
               );
             },
             separatorBuilder: (context, index) {return SizedBox(width: 10);},
-            itemCount: 4,
+            itemCount: movieController.actors.length,
           ),
         ),
       ],
