@@ -17,7 +17,7 @@ class MovieDetailScreen extends StatefulWidget {
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
 
-  final movieController = Get.find<MovieController>();
+  final movieController = Get.put(MovieController());
 
   @override
   void initState() {

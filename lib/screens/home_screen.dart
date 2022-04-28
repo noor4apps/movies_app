@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movies_app/controllers/home_controller.dart';
 import 'package:movies_app/models/movie.dart';
+import 'package:movies_app/screens/movie_detail.dart';
 import 'package:movies_app/screens/movies_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -72,52 +73,57 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget buildLandscapeMovieCard({required Movie movie}) {
-    return Container(
-      height: double.infinity,
-      width: 340,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        child: Column(
-          children:<Widget>[
-            Container(
-              width: double.infinity,
-              height: 200,
-              child: Stack(
-                children:<Widget>[
-                  Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: '${movie.banner}',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
-                ],
+    return InkWell(
+      onTap: () {
+        Get.to(() => MovieDetailScreen(movie: movie), preventDuplicates: false);
+      },
+      child: Container(
+        height: double.infinity,
+        width: 340,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: Column(
+            children:<Widget>[
+              Container(
+                width: double.infinity,
+                height: 200,
+                child: Stack(
+                  children:<Widget>[
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage,
+                      image: '${movie.banner}',
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text('${movie.title}', style: TextStyle(fontSize: 18, color: Colors.green), overflow: TextOverflow.ellipsis, maxLines: 1),
-                  ),
-                  SizedBox(width: 5),
-                  Row(
-                    children: <Widget>[
-                      Icon(Icons.star, color: Colors.yellow),
-                      Text('${movie.vote}', style: TextStyle(fontSize: 18, color: Colors.lightGreen))
-                    ],
-                  ),
-                ],
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text('${movie.title}', style: TextStyle(fontSize: 18, color: Colors.green), overflow: TextOverflow.ellipsis, maxLines: 1),
+                    ),
+                    SizedBox(width: 5),
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.star, color: Colors.yellow),
+                        Text('${movie.vote}', style: TextStyle(fontSize: 18, color: Colors.lightGreen))
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -164,33 +170,38 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget buildPortraitMovieCard({required Movie movie}) {
-    return Container(
-      height: double.infinity,
-      width: 140,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:<Widget>[
-          Container(
-            width: double.infinity,
-            height: 210,
-            child: Stack(
-              children:<Widget>[
-                Center(
-                  child: CircularProgressIndicator(),
-                ),
-                FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: '${movie.poster}',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
-              ],
+    return InkWell(
+      onTap: () {
+        Get.to(() => MovieDetailScreen(movie: movie), preventDuplicates: false);
+      },
+      child: Container(
+        height: double.infinity,
+        width: 140,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children:<Widget>[
+            Container(
+              width: double.infinity,
+              height: 210,
+              child: Stack(
+                children:<Widget>[
+                  Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: '${movie.poster}',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 7),
-          Text('${movie.title}', style: TextStyle(fontSize: 16, color: Colors.green), overflow: TextOverflow.ellipsis, maxLines: 1),
-        ],
+            SizedBox(height: 7),
+            Text('${movie.title}', style: TextStyle(fontSize: 16, color: Colors.green), overflow: TextOverflow.ellipsis, maxLines: 1),
+          ],
+        ),
       ),
     );
   }
