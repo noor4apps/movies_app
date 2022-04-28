@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:movies_app/controllers/movie_controller.dart';
 import 'package:movies_app/screens/splash_screen.dart';
 import 'package:movies_app/services/api.dart';
 
@@ -15,6 +16,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    Get.create(() => MovieController());
+
     return GetMaterialApp(
       title: 'Movie App',
       debugShowCheckedModeBanner: false,
