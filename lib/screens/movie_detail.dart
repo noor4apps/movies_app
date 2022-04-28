@@ -197,57 +197,90 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         Text('Related Movies', style: TextStyle(fontSize: 18)),
         SizedBox(height: 10),
         Container(
-          color: Colors.red,
-          height: 200,
-          child: ListView.separated(
-            physics: BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: false,
-            itemBuilder: (context, index) {
-              return Container(
-                width: 350,
-                height: 200,
-                child: Row(
-                  children: [
-                    Image.network('${movieController.related[index].poster}', width: 150, height: double.infinity, fit: BoxFit.cover),
-                    SizedBox(width: 6),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(child: Text('${movieController.related[index].title}', style: TextStyle(fontSize: 16,color: Colors.lightGreen), maxLines: 1, overflow: TextOverflow.ellipsis,),),
-                              Icon(Icons.star, color: Colors.lightGreen, size: 16),
-                              Text('${movieController.related[index].vote}', style: TextStyle(fontSize: 16, color: Colors.lightGreen)),
-                            ],
-                          ),
-                          SizedBox(width: 5),
-                          Text('${movieController.related[index].description}', style: TextStyle(fontSize: 14,color: Colors.lightGreen[200]), maxLines: 3, overflow: TextOverflow.ellipsis),
-                          Wrap(
-                            spacing: 3,
-                            runSpacing: -12,
-                            children: [
-                              ...movieController.related[index].genres.take(4).map((genre) {
-                                return Chip(label: Text('${genre.name}', style: TextStyle(fontSize: 12)));
-                              })
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return SizedBox(width: 10);
-            },
-            itemCount: movieController.related.length,
+          height: 450,
+          child: movieController.isLoadingRelated.value
+              ? Center(child: CircularProgressIndicator())
+              :ListView.separated(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: false,
+                itemBuilder: (context, index) {
+                  int halfIndex = movieController.related.length ~/ 2;
+                  return Column(
+                    children: [
+                      buildRelatedItem(movie: movieController.related[index]),
+                      SizedBox(height: 10),
+                      buildRelatedItem(movie: movieController.related[halfIndex + index])
+                    ],
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return SizedBox(width: 10);
+                },
+                itemCount: movieController.related.length ~/ 2,
           ),
         ),
       ],
+    );
+  }
+
+  Widget buildRelatedItem({required Movie movie}) {
+    return InkWell(
+      onTap: () {
+        Get.to(() => MovieDetailScreen(movie: movie), preventDuplicates: false);
+      },
+      child: Container(
+        width: 350,
+        height: 220,
+        child: Row(
+          children: [
+            Container(
+              width: 150,
+              height: double.infinity,
+              child: Stack(
+                alignment: Alignment.bottomLeft,
+                children: [
+                  Center(child: CircularProgressIndicator()),
+                  FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: '${movie.poster}',
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(width: 6),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: Text('${movie.title}', style: TextStyle(fontSize: 16,color: Colors.lightGreen), maxLines: 1, overflow: TextOverflow.ellipsis,),),
+                      Icon(Icons.star, color: Colors.lightGreen, size: 16),
+                      Text('${movie.vote}', style: TextStyle(fontSize: 16, color: Colors.lightGreen)),
+                    ],
+                  ),
+                  SizedBox(width: 5),
+                  Text('${movie.description}', style: TextStyle(fontSize: 14,color: Colors.lightGreen[200]), maxLines: 3, overflow: TextOverflow.ellipsis),
+                  Wrap(
+                    spacing: 3,
+                    runSpacing: -12,
+                    children: [
+                      ...movie.genres.take(4).map((genre) {
+                        return Chip(label: Text('${genre.name}', style: TextStyle(fontSize: 12)));
+                      })
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
