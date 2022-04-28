@@ -3,16 +3,19 @@ import 'package:movies_app/models/actor.dart';
 import 'package:movies_app/models/movie.dart';
 import 'package:movies_app/responses/movie_response.dart';
 import 'package:movies_app/responses/actor_response.dart';
+import 'package:movies_app/responses/related_response.dart';
 import 'package:movies_app/services/api.dart';
 
 class MovieController extends GetxController {
   var isLoading = true.obs;
   var isLoadingPagination = false.obs;
   var isLoadingActors = false.obs;
+  var isLoadingRelated = false.obs;
   var currentPage = 1.obs;
   var lastPage = 1.obs;
   var movies = <Movie>[].obs;
   var actors = <Actor>[].obs;
+  var related = <Movie>[].obs;
 
   Future<void> getMovies({int page = 1, String? type, int? genreId}) async {
 
@@ -43,6 +46,18 @@ class MovieController extends GetxController {
     actors.addAll(actorResponse.actors);
 
     isLoadingActors.value = false;
+  }
+
+  Future<void> getRelated({required int movieId}) async {
+
+    var response = await Api.getRelated(movieId: movieId);
+    var relatedResponse = RelatedResponse.fromJson(response.data);
+
+    related.clear();
+
+    related.addAll(relatedResponse.related);
+
+    isLoadingRelated.value = false;
   }
 
 }

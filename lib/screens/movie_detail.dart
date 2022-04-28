@@ -22,6 +22,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   @override
   void initState() {
     movieController.getActors(movieId: widget.movie.id);
+    movieController.getRelated(movieId: widget.movie.id);
     super.initState();
   }
   
@@ -49,6 +50,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     buildDetails(movie: widget.movie),
                     SizedBox(height: 10),
                     buildActors(),
+                    SizedBox(height: 10),
+                    buildRelated()
                   ],
                 ),
               );
@@ -136,7 +139,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(width: 160, child: Text('Actors ', style: TextStyle(fontSize: 18))),
+        Text('Actors ', style: TextStyle(fontSize: 18)),
         SizedBox(height: 10),
         Container(
           height: 270,
@@ -184,6 +187,67 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           Text('${actor.name}', overflow: TextOverflow.ellipsis, maxLines: 1)
         ],
       ),
+    );
+  }
+
+  Widget buildRelated() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Related Movies', style: TextStyle(fontSize: 18)),
+        SizedBox(height: 10),
+        Container(
+          color: Colors.red,
+          height: 200,
+          child: ListView.separated(
+            physics: BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: false,
+            itemBuilder: (context, index) {
+              return Container(
+                width: 350,
+                height: 200,
+                child: Row(
+                  children: [
+                    Image.network('${movieController.related[index].poster}', width: 150, height: double.infinity, fit: BoxFit.cover),
+                    SizedBox(width: 6),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(child: Text('${movieController.related[index].title}', style: TextStyle(fontSize: 16,color: Colors.lightGreen), maxLines: 1, overflow: TextOverflow.ellipsis,),),
+                              Icon(Icons.star, color: Colors.lightGreen, size: 16),
+                              Text('${movieController.related[index].vote}', style: TextStyle(fontSize: 16, color: Colors.lightGreen)),
+                            ],
+                          ),
+                          SizedBox(width: 5),
+                          Text('${movieController.related[index].description}', style: TextStyle(fontSize: 14,color: Colors.lightGreen[200]), maxLines: 3, overflow: TextOverflow.ellipsis),
+                          Wrap(
+                            spacing: 3,
+                            runSpacing: -12,
+                            children: [
+                              ...movieController.related[index].genres.take(4).map((genre) {
+                                return Chip(label: Text('${genre.name}', style: TextStyle(fontSize: 12)));
+                              })
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return SizedBox(width: 10);
+            },
+            itemCount: movieController.related.length,
+          ),
+        ),
+      ],
     );
   }
 

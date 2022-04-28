@@ -72,4 +72,8 @@ class Api {
     return dio.get('/api/movies/${movieId}/actors');
   }
 
+  static Future<Response> getRelated({required int movieId}) async {
+    return dio.get('/api/movies/${movieId}/related');
+  }
+
 }
