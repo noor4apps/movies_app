@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/controllers/movie_controller.dart';
 import 'package:movies_app/models/actor.dart';
+import 'package:movies_app/widgets/movie_item_widget.dart';
 
 class ActorScreen extends StatefulWidget {
 
@@ -15,20 +17,32 @@ class ActorScreen extends StatefulWidget {
 
 class _ActorScreenState extends State<ActorScreen> {
 
+  final movieController = Get.find<MovieController>();
+
+  @override
+  void initState() {
+    movieController.getMovies(actorId: widget.actor.id);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          buildTopBanner(actor: widget.actor),
-        ],
-      ),
+      body: Obx(() {
+        return ListView(
+          children: [
+            buildTopBanner(actor: widget.actor),
+            SizedBox(height: 10),
+            buildMovies()
+          ],
+        );
+      }),
     );
   }
 
   Widget buildTopBanner({required Actor actor}) {
     return Container(
-      height: 300,
+      height: Get.height/3,
       child: Stack(
         children: [
           Image.network('${actor.image}', fit: BoxFit.cover, width: double.infinity, height: double.infinity),
@@ -65,6 +79,38 @@ class _ActorScreenState extends State<ActorScreen> {
             },
             icon: Icon(Icons.arrow_back, size: 30),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget buildMovies() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Movies', style: TextStyle(fontSize: 18)),
+          SizedBox(height: 10),
+          movieController.isLoading.value
+              ? Container(height: Get.height/2, child: Center(child: CircularProgressIndicator()))
+              : ListView.separated(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        MovieItemWidget(movie: movieController.movies[index]),
+                      ],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 10);
+                  },
+                  itemCount: movieController.movies.length,
+                ),
         ],
       ),
     );

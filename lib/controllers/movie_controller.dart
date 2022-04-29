@@ -17,9 +17,9 @@ class MovieController extends GetxController {
   var actors = <Actor>[].obs;
   var related = <Movie>[].obs;
 
-  Future<void> getMovies({int page = 1, String? type, int? genreId}) async {
+  Future<void> getMovies({int page = 1, String? type, int? genreId, int? actorId}) async {
 
-    var response = await Api.getMovies(page: page, type: type, genreId: genreId);
+    var response = await Api.getMovies(page: page, type: type, genreId: genreId, actorId: actorId);
     var movieResponse = MovieResponse.fromJson(response.data);
 
     if (page == 1) {
