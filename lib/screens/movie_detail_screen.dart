@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:movies_app/controllers/movie_controller.dart';
 import 'package:movies_app/models/actor.dart';
 import 'package:movies_app/models/movie.dart';
+import 'package:movies_app/screens/actor_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MovieDetailScreen extends StatefulWidget {
@@ -161,31 +162,36 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   }
 
   Widget buildActor({required Actor actor}) {
-    return Container(
-      width: 160,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 160,
-            height: 230,
-            child: Stack(
-              // alignment: Alignment.bottomLeft,
-              children: [
-                Center(child: CircularProgressIndicator()),
-                FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: '${actor.image}',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
-              ],
+    return InkWell(
+      onTap: () {
+        Get.to(()=> ActorScreen(actor: actor), preventDuplicates: false);
+      },
+      child: Container(
+        width: 160,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 160,
+              height: 230,
+              child: Stack(
+                // alignment: Alignment.bottomLeft,
+                children: [
+                  Center(child: CircularProgressIndicator()),
+                  FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: '${actor.image}',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 10),
-          Text('${actor.name}', overflow: TextOverflow.ellipsis, maxLines: 1)
-        ],
+            SizedBox(height: 10),
+            Text('${actor.name}', overflow: TextOverflow.ellipsis, maxLines: 1)
+          ],
+        ),
       ),
     );
   }
