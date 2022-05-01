@@ -48,7 +48,15 @@ class SettingsScreen extends StatelessWidget {
                   leading: Icon(Icons.logout),
                   title: Text('Logout'),
                   onTap: () {
-                    authController.logout();
+                    Get.defaultDialog(
+                        title: "Confirm Logout",
+                        textConfirm: "Confirm",
+                        textCancel: "Cancel",
+                        radius: 50,
+                        content: Text('Are you sure want to Logout?'),
+                        onConfirm: () {
+                          authController.logout();
+                        });
                   },
                 ),
               ],
