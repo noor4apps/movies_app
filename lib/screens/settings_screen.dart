@@ -4,6 +4,7 @@ import 'package:movies_app/controllers/auth_controller.dart';
 import 'package:movies_app/screens/favorite_screen.dart';
 import 'package:movies_app/screens/login_screen.dart';
 import 'package:movies_app/screens/register_screen.dart';
+import 'package:movies_app/screens/welcome_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   final authController = Get.find<AuthController>();
@@ -47,7 +48,7 @@ class SettingsScreen extends StatelessWidget {
                   leading: Icon(Icons.logout),
                   title: Text('Logout'),
                   onTap: () {
-                    Get.to(() => null, preventDuplicates: false);
+                    authController.logout();
                   },
                 ),
               ],

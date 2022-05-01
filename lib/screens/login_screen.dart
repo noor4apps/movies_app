@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/controllers/auth_controller.dart';
 import 'package:movies_app/widgets/primary_btn_widget.dart';
 import 'package:movies_app/widgets/text_field_widget.dart';
 
@@ -11,11 +12,14 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
+  final authController = Get.find<AuthController>();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _hidePassword = true;
+  Map<String, dynamic> _loginData = {};
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
               label: 'Login',
               onPressed: () {
                 if(_formKey.currentState!.validate()) {
-
+                  _loginData['email'] = _emailController.text;
+                  _loginData['password'] = _passwordController.text;
+                  authController.login(loginData: _loginData);
                 }
               },
             ),

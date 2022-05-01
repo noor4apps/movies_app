@@ -77,4 +77,14 @@ class Api {
     return dio.get('/api/movies/${movieId}/related');
   }
 
+  static Future<Response> login({required Map<String, dynamic> loginData}) async {
+    FormData formData = FormData.fromMap(loginData);
+
+    return dio.post('/api/login', data: formData);
+  }
+
+  static Future<Response> logout() async {
+    return dio.get('/api/logout');
+  }
+
 }
