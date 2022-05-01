@@ -97,4 +97,12 @@ class Api {
     return dio.post('/api/register', data: formData);
   }
 
+  static Future<Response> isFavored({required int movieId}) async {
+    return dio.get('/api/movies/${movieId}/is-favored');
+  }
+
+  static Future<Response> toggleFavorite({required int movieId}) {
+    return dio.get('/api/movies/toggle-favorite', queryParameters: {'movie_id': movieId});
+  }
+
 }

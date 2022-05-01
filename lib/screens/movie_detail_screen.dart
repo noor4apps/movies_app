@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/controllers/auth_controller.dart';
 import 'package:movies_app/controllers/movie_controller.dart';
 import 'package:movies_app/models/actor.dart';
 import 'package:movies_app/models/movie.dart';
 import 'package:movies_app/screens/actor_screen.dart';
+import 'package:movies_app/screens/login_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MovieDetailScreen extends StatefulWidget {
@@ -19,31 +21,58 @@ class MovieDetailScreen extends StatefulWidget {
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
 
   final movieController = Get.find<MovieController>();
+  final authController = Get.find<AuthController>();
 
   @override
   void initState() {
     movieController.getActors(movieId: widget.movie.id);
     movieController.getRelated(movieId: widget.movie.id);
+    movieController.isFavored(movieId: widget.movie.id);
     super.initState();
   }
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            expandedHeight: 300,
-            backgroundColor: Colors.green,
-            flexibleSpace: FlexibleSpaceBar(
-              background: buildTopBanner(movie: widget.movie),
+      body: Obx(() {
+        return CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              floating: true,
+              pinned: true,
+              expandedHeight: 300,
+              backgroundColor: Colors.green,
+              actions: [
+                authController.isLoggedIn.value == false
+                    ? IconButton(
+                        onPressed: () {
+                          Get.to(() => LoginScreen(), preventDuplicates: false);
+                        },
+                        icon: Icon(Icons.favorite_border),
+                      )
+                    : movieController.isLoadingIsFavored.value == true
+                        ? Center(
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              width: 40,
+                              height: 40,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 3,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : IconButton(
+                            onPressed: () {movieController.toggleFavorite(movieId: widget.movie.id);},
+                            icon: Icon(movieController.isFavoredMovie.value == true ? Icons.favorite : Icons.favorite_border),
+                          )
+              ],
+              flexibleSpace: FlexibleSpaceBar(
+                background: buildTopBanner(movie: widget.movie),
+              ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Obx((){
-              return Container(
+            SliverToBoxAdapter(
+              child: Container(
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,11 +84,11 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     buildRelated()
                   ],
                 ),
-              );
-            })
-          ),
-        ],
-      ),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 
