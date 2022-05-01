@@ -87,4 +87,8 @@ class Api {
     return dio.get('/api/logout');
   }
 
+  static Future<Response> getUser() async {
+    return dio.get('/api/user');
+  }
+
 }

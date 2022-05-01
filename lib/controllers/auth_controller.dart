@@ -25,7 +25,7 @@ class AuthController extends GetxController with BaseController {
    var token = await GetStorage().read('login_token');
 
    if(token != null) {
-     isLoggedIn.value = true;
+     getUser();
    }
 
    Get.off(() => WelcomeScreen());
@@ -54,6 +54,17 @@ class AuthController extends GetxController with BaseController {
     await GetStorage().remove('login_token');
     isLoggedIn.value = false;
     Get.offAll(() => WelcomeScreen());
+  }
+
+  Future<void> getUser() async {
+
+    var response = await Api.getUser();
+    var userResponse = UserResponse.fromJson(response.data);
+
+    user.value = userResponse.user;
+
+    isLoggedIn.value = true;
+
   }
 
 }
