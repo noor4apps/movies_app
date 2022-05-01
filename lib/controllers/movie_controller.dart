@@ -90,4 +90,22 @@ class MovieController extends GetxController {
     }
   }
 
+  Future<void> getFavorite({int page = 1}) async {
+    var response = await Api.getFavorite(page: page);
+    var movieResponse = MovieResponse.fromJson(response.data);
+
+    if (page == 1) {
+      movies.clear();
+      // for RefreshIndicator
+      isLoading.value = true;
+      currentPage.value = 1;
+    }
+
+    movies.addAll(movieResponse.movies);
+    lastPage.value = movieResponse.lastPage;
+
+    isLoading.value = false;
+    isLoadingPagination.value = false;
+  }
+
 }

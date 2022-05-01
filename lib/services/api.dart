@@ -105,4 +105,8 @@ class Api {
     return dio.get('/api/movies/toggle-favorite', queryParameters: {'movie_id': movieId});
   }
 
+  static Future<Response> getFavorite({int page = 1}) {
+    return dio.get('/api/movies/favorite', queryParameters: {'page': page});
+  }
+
 }

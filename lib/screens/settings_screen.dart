@@ -41,7 +41,7 @@ class SettingsScreen extends StatelessWidget {
                   leading: Icon(Icons.favorite),
                   title: Text('Favorite movies'),
                   onTap: () {
-                    Get.to(() => FavoriteScreen(), preventDuplicates: false);
+                    Get.to(() => FavoriteScreen(title: 'Favorite'), preventDuplicates: false);
                   },
                 ),
                 ListTile(
