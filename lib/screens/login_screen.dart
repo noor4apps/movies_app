@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movies_app/controllers/auth_controller.dart';
+import 'package:movies_app/screens/register_screen.dart';
 import 'package:movies_app/widgets/primary_btn_widget.dart';
 import 'package:movies_app/widgets/text_field_widget.dart';
 
@@ -96,6 +97,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   _loginData['password'] = _passwordController.text;
                   authController.login(loginData: _loginData);
                 }
+              },
+            ),
+            SizedBox(height: 10),
+            TextButton(
+              child: Text('Create new account'),
+              onPressed: () {
+                Get.off(() => RegisterScreen(), preventDuplicates: false);
               },
             ),
           ],

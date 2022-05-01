@@ -91,4 +91,10 @@ class Api {
     return dio.get('/api/user');
   }
 
+  static Future<Response> register({required Map<String, dynamic> registerData}) async {
+    FormData formData = FormData.fromMap(registerData);
+
+    return dio.post('/api/register', data: formData);
+  }
+
 }

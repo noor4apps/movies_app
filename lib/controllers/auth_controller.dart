@@ -67,4 +67,21 @@ class AuthController extends GetxController with BaseController {
 
   }
 
+  Future<void> register({required Map<String, dynamic> registerData}) async {
+    showLoading();
+
+    var response = await Api.register(registerData: registerData);
+    var userResponse = UserResponse.fromJson(response.data);
+
+    await GetStorage().write('login_token', userResponse.token);
+
+    user.value = userResponse.user;
+
+    isLoggedIn.value = true;
+
+    hideLoading();
+
+    Get.offAll(() => WelcomeScreen());
+  }
+
 }
