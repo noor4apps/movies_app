@@ -109,4 +109,10 @@ class Api {
     return dio.get('/api/movies/favorite', queryParameters: {'page': page});
   }
 
+  static Future<Response> search({String? keyWord}) async {
+    return dio.get('/api/movies', queryParameters: {
+      'search': keyWord,
+    });
+  }
+
 }

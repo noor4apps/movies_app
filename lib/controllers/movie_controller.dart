@@ -108,4 +108,15 @@ class MovieController extends GetxController {
     isLoadingPagination.value = false;
   }
 
+  Future<void> search({String? keyWord}) async {
+
+    var response = await Api.search(keyWord: keyWord);
+    var movieResponse = MovieResponse.fromJson(response.data);
+
+    movies.clear();
+    movies.addAll(movieResponse.movies);
+
+    isLoading.value = false;
+  }
+
 }
