@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/constants/m_colors.dart';
+import 'package:movies_app/constants/sizes.dart';
 import 'package:movies_app/controllers/movie_controller.dart';
 import 'package:movies_app/models/movie.dart';
-import 'package:movies_app/screens/movie_detail_screen.dart';
 import 'package:movies_app/widgets/movie_item_widget.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class MoviesScreen extends StatefulWidget {
   late final String title;
@@ -49,7 +49,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.title}', style: TextStyle(fontSize: 20, color: Colors.green, fontWeight: FontWeight.w600)),
+        title: Text('${widget.title}', style: TextStyle(fontSize: Sizes.screen, color: MColors.secondary, fontWeight: FontWeight.w600)),
       ),
         body: Obx(() {
           return movieController.isLoading.value == true

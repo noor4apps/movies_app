@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/constants/m_colors.dart';
+import 'package:movies_app/constants/sizes.dart';
 import 'package:movies_app/models/movie.dart';
 import 'package:movies_app/screens/movie_detail_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -20,8 +22,8 @@ class MovieItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            width: 130,
-            height: 200,
+            width: Get.width / 3.5,
+            height: Get.height / 4.5,
             child: Stack(
               children: [
                 Center(child: CircularProgressIndicator()),
@@ -40,12 +42,12 @@ class MovieItemWidget extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: Text('${movie.title}', style: TextStyle(fontSize: 18, color: Colors.green, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis, maxLines: 2),
+                      child: Text('${movie.title}', style: TextStyle(fontSize: Sizes.titleCart, color: MColors.primary, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis, maxLines: 2),
                     ),
                     Row(
                       children: <Widget>[
-                        Icon(Icons.star, color: Colors.yellow),
-                        Text('${movie.vote}', style: TextStyle(fontSize: 18, color: Colors.lightGreen))
+                        Icon(Icons.star, color: MColors.yellow, size: Sizes.starIconCart),
+                        Text('${movie.vote}', style: TextStyle(fontSize: Sizes.starNumberCart, color: MColors.secondary))
                       ],
                     ),
                   ],
@@ -53,9 +55,9 @@ class MovieItemWidget extends StatelessWidget {
                 SizedBox(height: 10),
                 Text(
                   '${movie.description}',
-                  style: TextStyle(fontSize: 15, color: Colors.lightGreen[200]),
+                  style: TextStyle(fontSize: Sizes.descriptionCart, color: MColors.tertiary),
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 8,
+                  maxLines: 6,
                 ),
               ],
             ),

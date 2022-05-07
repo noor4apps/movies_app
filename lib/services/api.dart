@@ -7,7 +7,7 @@ class Api {
 
   static final dio = Dio(
     BaseOptions(
-        baseUrl: 'http://10.0.2.2/movies/public',
+        baseUrl: 'http://192.168.1.3/movies/public',
         receiveDataWhenStatusError: true
     ),
   );

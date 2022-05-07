@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/constants/sizes.dart';
 
 class primaryBtnWidget extends StatelessWidget {
 
@@ -12,7 +13,7 @@ class primaryBtnWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: ElevatedButton(
-        child: Text('${label}', style: TextStyle(fontSize: 16)),
+        child: Text('${label}', style: TextStyle(fontSize: Sizes.label)),
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.all(14),
           shape: RoundedRectangleBorder(

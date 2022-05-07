@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/constants/m_colors.dart';
+import 'package:movies_app/constants/sizes.dart';
 import 'package:movies_app/controllers/auth_controller.dart';
 import 'package:movies_app/screens/favorite_screen.dart';
 import 'package:movies_app/screens/login_screen.dart';
 import 'package:movies_app/screens/register_screen.dart';
-import 'package:movies_app/screens/welcome_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   final authController = Get.find<AuthController>();
@@ -24,9 +25,9 @@ class SettingsScreen extends StatelessWidget {
   Widget buildTopBanner() {
     return Container(
       height: Get.height / 3.5,
-      color: Colors.green,
+      color: MColors.primary,
       child: Center(
-        child: Text('Settings', style: TextStyle(fontSize: 20)),
+        child: Text('Settings', style: TextStyle(fontSize: Sizes.screen)),
       ),
     );
   }

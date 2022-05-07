@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/constants/m_colors.dart';
+import 'package:movies_app/constants/sizes.dart';
 import 'package:movies_app/screens/result_screens.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -16,13 +18,13 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget _buildSearchField() {
     return TextField(
       controller: _searchTextController,
-      cursorColor: Colors.white,
+      cursorColor: MColors.white,
       decoration: InputDecoration(
         hintText: 'Find a movie...',
         border: InputBorder.none,
-        hintStyle: TextStyle(color: Colors.white, fontSize: 18),
+        hintStyle: TextStyle(color: MColors.white, fontSize: Sizes.hint),
       ),
-      style: TextStyle(color: Colors.white, fontSize: 18),
+      style: TextStyle(color: MColors.white, fontSize: Sizes.hint),
       autofocus: true,
     );
   }
@@ -32,7 +34,7 @@ class _SearchScreenState extends State<SearchScreen> {
       onTap: () {
         _searchTextController.clear();
       },
-      child: Icon(Icons.clear, color: Colors.white),
+      child: Icon(Icons.clear, color: MColors.white),
     );
   }
 
@@ -44,7 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
           if (searchWord.length > 0)
             Get.to(() => ResultScreen(searchWord: searchWord), preventDuplicates: false);
         },
-        icon: Icon(Icons.search, color: Colors.white),
+        icon: Icon(Icons.search, color: MColors.white),
       ),
     ];
   }
@@ -53,7 +55,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: MColors.primary,
         leading: _buildClearLeading(),
         title: _buildSearchField(),
         actions: _buildSearchActions(),

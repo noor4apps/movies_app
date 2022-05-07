@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:movies_app/controllers/movie_controller.dart';
 import 'package:movies_app/screens/splash_screen.dart';
 import 'package:movies_app/services/api.dart';
+import 'package:movies_app/constants/m_colors.dart';
 
 void main() async {
   await GetStorage.init();
@@ -25,22 +26,22 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         appBarTheme: AppBarTheme(
           centerTitle: true,
-          iconTheme: IconThemeData(color: Colors.white, size: 27),
-          backgroundColor: Colors.lightGreenAccent[200],
+          iconTheme: IconThemeData(color: MColors.white, size: 27),
+          backgroundColor: MColors.tertiary,
           systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.lightGreen,
+            statusBarColor: MColors.secondary,
             statusBarIconBrightness: Brightness.light,
           ),
           titleTextStyle: TextStyle(
-            color: Colors.white,
+            color: MColors.white,
             fontSize: 20,
           ),
           // iconTheme: IconThemeData(color: Colors.black),
           // color: Colors.blue
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: Colors.green,
-          secondary: Colors.lightGreen,
+          primary: MColors.primary,
+          secondary: MColors.secondary,
           brightness: Brightness.dark,
         ),
       ),

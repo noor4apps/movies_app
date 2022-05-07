@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/constants/m_colors.dart';
+import 'package:movies_app/constants/sizes.dart';
 import 'package:movies_app/controllers/auth_controller.dart';
 import 'package:movies_app/controllers/movie_controller.dart';
 import 'package:movies_app/models/actor.dart';
@@ -41,7 +43,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
               floating: true,
               pinned: true,
               expandedHeight: 300,
-              backgroundColor: Colors.green,
+              backgroundColor: MColors.primary,
               actions: [
                 authController.isLoggedIn.value == false
                     ? IconButton(
@@ -58,7 +60,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                               height: 40,
                               child: CircularProgressIndicator(
                                 strokeWidth: 3,
-                                color: Colors.white,
+                                color: MColors.white,
                               ),
                             ),
                           )
@@ -113,23 +115,23 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Chip(
-                backgroundColor: Colors.green,
+                backgroundColor: MColors.primary,
                 padding: const EdgeInsets.all(0),
                 label: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Icon(Icons.star, color: Colors.black),
-                    Text('${movie.vote}', style: TextStyle(fontSize: 18, color: Colors.black))
+                    Icon(Icons.star, color: MColors.black, size: Sizes.starIconDetail),
+                    Text('${movie.vote}', style: TextStyle(fontSize: Sizes.starNumberDetail, color: MColors.black))
                   ],
                 ),
               ),
-              Text('${movie.title}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600), maxLines: 2, overflow: TextOverflow.ellipsis),
+              Text('${movie.title}', style: TextStyle(fontSize: Sizes.titleDetail, fontWeight: FontWeight.w600), maxLines: 2, overflow: TextOverflow.ellipsis),
               Wrap(
                 spacing: 5,
                 runSpacing: -10,
                 children: [
                   ...movie.genres.map((genre) {
-                    return Chip(label: Text('${genre.name}', style: TextStyle(fontSize: 13)));
+                    return Chip(label: Text('${genre.name}', style: TextStyle(fontSize: Sizes.genreDetail)));
                   })
                 ],
               ),
@@ -144,21 +146,21 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Description', style: TextStyle(fontSize: 18)),
+        Text('Description', style: TextStyle(fontSize: Sizes.section)),
         SizedBox(height: 10),
-        Text('${movie.description}', style: TextStyle(fontSize: 16, height: 1.3, color: Colors.lightGreen[200])),
+        Text('${movie.description}', style: TextStyle(fontSize: Sizes.descriptionDetail, height: 1.3, color: MColors.tertiary)),
         SizedBox(height: 10),
         Row(
           children: [
-            Container(width: 160, child: Text('Release Date ', style: TextStyle(fontSize: 18))),
-            Text('${movie.releaseDate}', style: TextStyle(fontSize: 16, height: 1.3, color: Colors.lightGreen[200]))
+            Container(width: 160, child: Text('Release Date ', style: TextStyle(fontSize: Sizes.section))),
+            Text('${movie.releaseDate}', style: TextStyle(fontSize: Sizes.releaseDateDetail, height: 1.3, color: MColors.tertiary))
           ],
         ),
         SizedBox(height: 10),
         Row(
           children: [
-            Container(width:160, child: Text('Vote Count ', style: TextStyle(fontSize: 18))),
-            Text('${movie.voteCount}', style: TextStyle(fontSize: 16, height: 1.3, color: Colors.lightGreen[200]))
+            Container(width:160, child: Text('Vote Count ', style: TextStyle(fontSize: Sizes.section))),
+            Text('${movie.voteCount}', style: TextStyle(fontSize: Sizes.voteCountDetail, height: 1.3, color: MColors.tertiary))
           ],
         ),
       ],
@@ -169,10 +171,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Actors ', style: TextStyle(fontSize: 18)),
+        Text('Actors ', style: TextStyle(fontSize: Sizes.section)),
         SizedBox(height: 10),
         Container(
-          height: 270,
+          height: Get.height / 3 + 40,
           child: movieController.isLoadingActors.value
           ? Center(child: CircularProgressIndicator())
           : ListView.separated(
@@ -201,8 +203,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 160,
-              height: 230,
+              height: Get.height / 3,
               child: Stack(
                 // alignment: Alignment.bottomLeft,
                 children: [
@@ -218,7 +219,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
               ),
             ),
             SizedBox(height: 10),
-            Text('${actor.name}', overflow: TextOverflow.ellipsis, maxLines: 1)
+            Text('${actor.name}', overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: Sizes.actorCart),)
           ],
         ),
       ),
@@ -229,10 +230,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Related Movies', style: TextStyle(fontSize: 18)),
+        Text('Related Movies', style: TextStyle(fontSize: Sizes.section)),
         SizedBox(height: 10),
         Container(
-          height: 450,
+          height: Get.height / 2 + 10,
           child: movieController.isLoadingRelated.value
               ? Center(child: CircularProgressIndicator())
               :ListView.separated(
@@ -265,12 +266,12 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         Get.to(() => MovieDetailScreen(movie: movie), preventDuplicates: false);
       },
       child: Container(
-        width: 350,
-        height: 220,
+        width: Get.width - 40,
+        height: Get.height / 4,
         child: Row(
           children: [
             Container(
-              width: 150,
+              width: Get.width / 3.5,
               height: double.infinity,
               child: Stack(
                 alignment: Alignment.bottomLeft,
@@ -294,19 +295,19 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 children: [
                   Row(
                     children: [
-                      Expanded(child: Text('${movie.title}', style: TextStyle(fontSize: 16,color: Colors.lightGreen), maxLines: 1, overflow: TextOverflow.ellipsis,),),
-                      Icon(Icons.star, color: Colors.lightGreen, size: 16),
-                      Text('${movie.vote}', style: TextStyle(fontSize: 16, color: Colors.lightGreen)),
+                      Expanded(child: Text('${movie.title}', style: TextStyle(fontSize: Sizes.titleCart,color: MColors.secondary), maxLines: 1, overflow: TextOverflow.ellipsis,),),
+                      Icon(Icons.star, color: MColors.secondary, size: Sizes.starIconCart),
+                      Text('${movie.vote}', style: TextStyle(fontSize: Sizes.starNumberCart, color: MColors.secondary)),
                     ],
                   ),
                   SizedBox(width: 5),
-                  Text('${movie.description}', style: TextStyle(fontSize: 14,color: Colors.lightGreen[200]), maxLines: 3, overflow: TextOverflow.ellipsis),
+                  Text('${movie.description}', style: TextStyle(fontSize: Sizes.descriptionCart,color: MColors.tertiary), maxLines: 3, overflow: TextOverflow.ellipsis),
                   Wrap(
                     spacing: 3,
                     runSpacing: -12,
                     children: [
-                      ...movie.genres.take(4).map((genre) {
-                        return Chip(label: Text('${genre.name}', style: TextStyle(fontSize: 12)));
+                      ...movie.genres.take(2).map((genre) {
+                        return Chip(label: Text('${genre.name}', style: TextStyle(fontSize: Sizes.genreCart)));
                       })
                     ],
                   ),

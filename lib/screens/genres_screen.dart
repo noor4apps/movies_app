@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/constants/m_colors.dart';
 import 'package:movies_app/controllers/genre_controller.dart';
 import 'package:movies_app/screens/movies_screen.dart';
+import 'package:movies_app/constants/sizes.dart';
 
 class GenresScreen extends StatelessWidget {
 
@@ -32,14 +34,14 @@ class GenresScreen extends StatelessWidget {
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(color: Colors.green, width: 1),
+                    side: BorderSide(color: MColors.primary, width: 1),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text('${genreController.genres[index].name}', style: TextStyle(fontSize: 18, color: Colors.green)),
+                      Text('${genreController.genres[index].name}', style: TextStyle(fontSize: Sizes.genreScreenName, color: MColors.primary)),
                       SizedBox(height: 10),
-                      Text('${genreController.genres[index].moviesCount}', style: TextStyle(fontSize: 18, color: Colors.lightGreen)),
+                      Text('${genreController.genres[index].moviesCount}', style: TextStyle(fontSize: Sizes.genreScreenNumber, color: MColors.secondary)),
                     ],
                   ),
                 ),

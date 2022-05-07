@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/constants/m_colors.dart';
+import 'package:movies_app/constants/sizes.dart';
 
 class TextFieldWidget extends StatelessWidget {
 
@@ -16,7 +18,7 @@ class TextFieldWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('${label}', style: TextStyle(fontSize: 15)),
+        Text('${label}', style: TextStyle(fontSize: Sizes.label)),
         SizedBox(height: 10),
         TextFormField(
           controller: controller,
@@ -28,28 +30,28 @@ class TextFieldWidget extends StatelessWidget {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide(
-                    color: Colors.green,
+                    color: MColors.primary,
                     width: 2
                 )
             ),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide(
-                    color: Colors.green,
+                    color: MColors.primary,
                     width: 2
                 )
             ),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide(
-                    color: Colors.green,
+                    color: MColors.primary,
                     width: 2
                 )
             ),
             errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide(
-                    color: Colors.red,
+                    color: MColors.red,
                     width: 3
                 )
             ),

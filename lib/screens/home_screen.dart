@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/constants/m_colors.dart';
+import 'package:movies_app/constants/sizes.dart';
 import 'package:movies_app/controllers/home_controller.dart';
 import 'package:movies_app/models/movie.dart';
 import 'package:movies_app/screens/movie_detail_screen.dart';
@@ -39,7 +41,7 @@ class HomeScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children:<Widget>[
-            Text('${title}', style: TextStyle(fontSize: 20, color: Colors.green),),
+            Text('${title}', style: TextStyle(fontSize: Sizes.section, color: MColors.primary),),
             InkWell(
               onTap: () {
                 Get.to(
@@ -47,13 +49,13 @@ class HomeScreen extends StatelessWidget {
                   preventDuplicates: false,
                 );
               },
-              child: Text('Show All...', style: TextStyle(color: Colors.lightGreen)),
+              child: Text('Show All...', style: TextStyle(color: MColors.secondary, fontSize: Sizes.section)),
             ),
           ],
         ),
         SizedBox(height: 10),
         Container(
-          height: 255,
+          height: Get.height / 3 + 60,
           child: isLoading == true
               ? Center(child: CircularProgressIndicator())
               : ListView.separated(
@@ -79,7 +81,7 @@ class HomeScreen extends StatelessWidget {
       },
       child: Container(
         height: double.infinity,
-        width: 340,
+        width: Get.width - 60,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -89,7 +91,7 @@ class HomeScreen extends StatelessWidget {
             children:<Widget>[
               Container(
                 width: double.infinity,
-                height: 200,
+                height: Get.height / 3,
                 child: Stack(
                   children:<Widget>[
                     Center(
@@ -110,13 +112,13 @@ class HomeScreen extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Expanded(
-                      child: Text('${movie.title}', style: TextStyle(fontSize: 18, color: Colors.green), overflow: TextOverflow.ellipsis, maxLines: 1),
+                      child: Text('${movie.title}', style: TextStyle(fontSize: Sizes.titleCart, color: MColors.tertiary), overflow: TextOverflow.ellipsis, maxLines: 1),
                     ),
                     SizedBox(width: 5),
                     Row(
                       children: <Widget>[
-                        Icon(Icons.star, color: Colors.yellow),
-                        Text('${movie.vote}', style: TextStyle(fontSize: 18, color: Colors.lightGreen))
+                        Icon(Icons.star, color: MColors.yellow, size: Sizes.starIconCart),
+                        Text('${movie.vote}', style: TextStyle(fontSize: Sizes.starNumberCart, color: MColors.secondary))
                       ],
                     ),
                   ],
@@ -136,7 +138,7 @@ class HomeScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children:<Widget>[
-            Text('${title}', style: TextStyle(fontSize: 20, color: Colors.green),),
+            Text('${title}', style: TextStyle(fontSize: Sizes.section, color: MColors.primary),),
             InkWell(
               onTap: () {
                 Get.to(
@@ -144,13 +146,13 @@ class HomeScreen extends StatelessWidget {
                   preventDuplicates: false,
                 );
               },
-              child: Text('Show All...', style: TextStyle(color: Colors.lightGreen)),
+              child: Text('Show All...', style: TextStyle(color: MColors.secondary, fontSize: Sizes.section)),
             )
           ],
         ),
         SizedBox(height: 10),
         Container(
-          height: 240,
+          height: Get.height / 3,
           child: isLoading == true
               ? Center(child: CircularProgressIndicator())
               : ListView.separated(
@@ -176,13 +178,13 @@ class HomeScreen extends StatelessWidget {
       },
       child: Container(
         height: double.infinity,
-        width: 140,
+        width: Get.width / 3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children:<Widget>[
             Container(
               width: double.infinity,
-              height: 210,
+              height: Get.height / 3.5,
               child: Stack(
                 children:<Widget>[
                   Center(
@@ -199,7 +201,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 7),
-            Text('${movie.title}', style: TextStyle(fontSize: 16, color: Colors.green), overflow: TextOverflow.ellipsis, maxLines: 1),
+            Text('${movie.title}', style: TextStyle(fontSize: Sizes.titleCart, color: MColors.tertiary), overflow: TextOverflow.ellipsis, maxLines: 1),
           ],
         ),
       ),

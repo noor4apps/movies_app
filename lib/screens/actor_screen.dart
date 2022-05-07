@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/constants/m_colors.dart';
+import 'package:movies_app/constants/sizes.dart';
 import 'package:movies_app/controllers/movie_controller.dart';
 import 'package:movies_app/models/actor.dart';
 import 'package:movies_app/widgets/movie_item_widget.dart';
@@ -58,7 +60,7 @@ class _ActorScreenState extends State<ActorScreen> {
                   alignment: Alignment.center,
                   children: [
                     CircleAvatar(
-                      backgroundColor: Colors.green,
+                      backgroundColor: MColors.primary,
                       radius: 75,
                     ),
                     CircleAvatar(
@@ -68,7 +70,7 @@ class _ActorScreenState extends State<ActorScreen> {
                   ],
                 ),
                 SizedBox(height: 10),
-                Text('${actor.name}', style: TextStyle(fontSize: 25)),
+                Text('${actor.name}', style: TextStyle(fontSize: Sizes.actorDetail)),
               ],
             ),
           ),
@@ -90,7 +92,7 @@ class _ActorScreenState extends State<ActorScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Movies', style: TextStyle(fontSize: 18)),
+          Text('Movies', style: TextStyle(fontSize: Sizes.section)),
           SizedBox(height: 10),
           movieController.isLoading.value
               ? Container(height: Get.height/2, child: Center(child: CircularProgressIndicator()))

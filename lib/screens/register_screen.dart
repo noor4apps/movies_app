@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movies_app/constants/m_colors.dart';
+import 'package:movies_app/constants/sizes.dart';
 import 'package:movies_app/controllers/auth_controller.dart';
 import 'package:movies_app/screens/login_screen.dart';
 import 'package:movies_app/widgets/primary_btn_widget.dart';
@@ -42,10 +44,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget buildTopBanner() {
     return Container(
       height: Get.height/3.5,
-      color: Colors.green,
+      color: MColors.primary,
       child: Stack(
         children: [
-          Center(child: Text('Register', style: TextStyle(fontSize: 25))),
+          Center(child: Text('Register', style: TextStyle(fontSize: Sizes.screen))),
           IconButton(
             padding: EdgeInsets.all(15),
             onPressed: () {
